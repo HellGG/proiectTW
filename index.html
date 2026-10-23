@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#101815">
+    <meta name="description" content="A menu cost and profitability dashboard for restaurants and pubs.">
+    <title>Horeca Cost Controller</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#" aria-label="Horeca Cost Controller home">
+        <span class="brand-mark" aria-hidden="true">H</span>
+        <span>Horeca <strong>Cost Controller</strong></span>
+      </a>
+      <p class="header-note">A clearer view of your menu</p>
+    </header>
+
+    <main class="page-shell">
+      <section class="intro" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">MENU MANAGEMENT <span aria-hidden="true">/</span> OVERVIEW</p>
+          <h1 id="page-title">Know what’s working<br>on your menu.</h1>
+          <p class="intro-copy">Keep your recipes organized and understand how each plate contributes to your business.</p>
+        </div>
+        <div class="summary" aria-label="Menu summary">
+          <span class="summary-label">MENU ITEMS</span>
+          <strong>03</strong>
+          <span class="summary-detail"><span class="status-dot" aria-hidden="true"></span> 2 currently available</span>
+        </div>
+      </section>
+
+      <div class="workspace-grid">
+        <section class="add-section" aria-labelledby="add-title">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">YOUR KITCHEN, ORGANIZED</p>
+              <h2 id="add-title">Add a menu item</h2>
+            </div>
+            <span class="stage-tag">STAGE 01 · STATIC PREVIEW</span>
+          </div>
+          <form class="recipe-form">
+            <div class="field field-name">
+              <label for="recipe-name">Recipe name</label>
+              <input id="recipe-name" name="recipe-name" type="text" maxlength="100" placeholder="e.g. Wild mushroom risotto" required>
+            </div>
+            <div class="field">
+              <label for="course-type">Course type</label>
+              <select id="course-type" name="course-type" required>
+                <option value="" selected disabled>Choose a course</option>
+                <option value="main">Main</option>
+                <option value="dessert">Dessert</option>
+                <option value="drink">Drink</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="menu-category">Menu category</label>
+              <select id="menu-category" name="menu-category" required>
+                <option value="" selected disabled>Choose a category</option>
+                <option value="pasta">Pasta</option>
+                <option value="grill">Grill</option>
+                <option value="bar">Bar</option>
+              </select>
+            </div>
+            <button class="add-button" type="button"><span aria-hidden="true">+</span> Add recipe</button>
+          </form>
+          <p class="form-note">This is a visual preview. Adding and saving recipes will be implemented in a later stage.</p>
+        </section>
+
+        <section class="menu-section" aria-labelledby="menu-title">
+          <div class="section-heading menu-heading">
+            <div>
+              <p class="eyebrow">THE LINEUP</p>
+              <h2 id="menu-title">Your menu <span class="item-count">03 items</span></h2>
+            </div>
+            <p class="legend"><span class="status-dot" aria-hidden="true"></span> Available <span class="legend-divider">·</span> <span class="status-dot status-dot-muted" aria-hidden="true"></span> Not available</p>
+          </div>
+
+          <div class="recipe-grid">
+          <article class="recipe-card">
+            <div class="card-topline">
+              <span class="category-label"><span class="category-icon" aria-hidden="true">P</span> PASTA</span>
+              <span class="availability"><span class="status-dot" aria-hidden="true"></span> Available</span>
+            </div>
+            <div class="recipe-copy">
+              <p class="course-label">MAIN COURSE</p>
+              <h3>Carbonara Pasta</h3>
+              <p class="recipe-description">Creamy egg sauce, aged pecorino, crisp pancetta and cracked black pepper.</p>
+            </div>
+            <div class="card-metrics">
+              <div><span>PORTION COST</span><strong>$2.80</strong></div>
+              <div><span>MENU PRICE</span><strong>$12.50</strong></div>
+              <div class="margin-metric"><span>GROSS MARGIN</span><strong>77.6%</strong></div>
+            </div>
+            <div class="card-footer"><span>Recipe <strong>#001</strong></span><span class="margin-note">Illustrative figures</span></div>
+          </article>
+
+          <article class="recipe-card done">
+            <div class="card-topline">
+              <span class="category-label"><span class="category-icon" aria-hidden="true">G</span> GRILL</span>
+              <span class="availability unavailable"><span class="status-dot status-dot-muted" aria-hidden="true"></span> Not available</span>
+            </div>
+            <div class="recipe-copy">
+              <p class="course-label">MAIN COURSE</p>
+              <h3>Lamb Ribs with Citrus Glaze</h3>
+              <p class="recipe-description">Slow-roasted lamb ribs finished with a bright citrus glaze and garden herbs.</p>
+            </div>
+            <div class="card-metrics">
+              <div><span>PORTION COST</span><strong>$6.40</strong></div>
+              <div><span>MENU PRICE</span><strong>$21.00</strong></div>
+              <div class="margin-metric"><span>GROSS MARGIN</span><strong>69.5%</strong></div>
+            </div>
+            <div class="card-footer"><span>Recipe <strong>#002</strong></span><span class="margin-note">Illustrative figures</span></div>
+          </article>
+
+          <article class="recipe-card">
+            <div class="card-topline">
+              <span class="category-label"><span class="category-icon" aria-hidden="true">B</span> BAR</span>
+              <span class="availability"><span class="status-dot" aria-hidden="true"></span> Available</span>
+            </div>
+            <div class="recipe-copy">
+              <p class="course-label">DRINK</p>
+              <h3>Craft IPA Beer</h3>
+              <p class="recipe-description">A bright, hop-forward local IPA with citrus notes and a clean finish.</p>
+            </div>
+            <div class="card-metrics">
+              <div><span>PORTION COST</span><strong>$1.65</strong></div>
+              <div><span>MENU PRICE</span><strong>$7.00</strong></div>
+              <div class="margin-metric"><span>GROSS MARGIN</span><strong>76.4%</strong></div>
+            </div>
+            <div class="card-footer"><span>Recipe <strong>#003</strong></span><span class="margin-note">Illustrative figures</span></div>
+          </article>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <span>HORECA COST CONTROLLER</span>
+      <span>Stage 1 · Interface mockup</span>
+    </footer>
+  <script src="recipes.js"></script>
+  </body>
+</html>
