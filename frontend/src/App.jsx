@@ -1,6 +1,7 @@
+import { useEffect, useState } from 'react'
 import RecipeList from './components/RecipeList.jsx'
 
-const recipes = [
+const INITIAL_RECIPES = [
   {
     id: 1,
     name: 'Carbonara Pasta',
@@ -24,8 +25,42 @@ const recipes = [
   },
 ]
 
+function getSystemTheme() {
+  return window.matchMedia('(prefers-color-scheme: dark)').matches
+    ? 'dark'
+    : 'light'
+}
+
 export default function App() {
+  const [recipes, setRecipes] = useState(INITIAL_RECIPES)
+  const [theme, setTheme] = useState(getSystemTheme)
   const availableCount = recipes.filter((recipe) => recipe.available).length
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme
+  }, [theme])
+
+  function handleToggleAvailability(id) {
+    setRecipes((previousRecipes) =>
+      previousRecipes.map((recipe) =>
+        recipe.id === id
+          ? { ...recipe, available: !recipe.available }
+          : recipe
+      )
+    )
+  }
+
+  function handleDeleteRecipe(id) {
+    setRecipes((previousRecipes) =>
+      previousRecipes.filter((recipe) => recipe.id !== id)
+    )
+  }
+
+  function handleThemeToggle() {
+    const nextTheme = theme === 'dark' ? 'light' : 'dark'
+    setTheme(nextTheme)
+    document.documentElement.dataset.theme = nextTheme
+  }
 
   return (
     <>
@@ -34,7 +69,18 @@ export default function App() {
           <span className="brand-mark" aria-hidden="true">H</span>
           <span>Horeca <strong>Cost Controller</strong></span>
         </a>
-        <p className="header-note">A clearer view of your menu</p>
+        <div className="header-actions">
+          <p className="header-note">A clearer view of your menu</p>
+          <button
+            className="theme-toggle"
+            type="button"
+            onClick={handleThemeToggle}
+            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+            aria-pressed={theme === 'dark'}
+          >
+            {theme === 'dark' ? 'Light mode' : 'Dark mode'}
+          </button>
+        </div>
       </header>
 
       <main className="page-shell">
@@ -63,17 +109,21 @@ export default function App() {
                   Your menu <span className="item-count">{recipes.length} items</span>
                 </h2>
               </div>
-              <span className="stage-tag">STAGE 04 · RECIPE CARDS</span>
+              <span className="stage-tag">STAGE 05 · INTERACTIVE MENU</span>
             </div>
 
-            <RecipeList recipes={recipes} />
+            <RecipeList
+              recipes={recipes}
+              onToggleAvailability={handleToggleAvailability}
+              onDelete={handleDeleteRecipe}
+            />
           </section>
         </div>
       </main>
 
       <footer className="site-footer">
         <span>HORECA COST CONTROLLER</span>
-        <span>Stage 4 · Recipe cards</span>
+        <span>Stage 5 · Interactive menu</span>
       </footer>
     </>
   )

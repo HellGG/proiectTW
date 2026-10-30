@@ -22,13 +22,14 @@ The mockup displays illustrative portion costs, menu prices, and gross margins t
 | :--- | :--- |
 | ChatGPT | Generating initial CSS layout ideas and SQL schema structure |
 | Gemini | Brainstorming project themes and formatting the README file |
-| Copilot | Implementing the Stage 1 mockup, Stage 2 data logic, and Stage 3–4 React/Vite features |
+| Copilot | Implementing the Stage 1 mockup, Stage 2 data logic, and Stage 3–5 React/Vite features |
 
 Details per stage:
 * Stage 1: Gemini was used to map the HORECA project idea to the required TW structure and draft the README. Copilot assisted with the mockup implementation and this log; see [ai-log/etapa-01.md](ai-log/etapa-01.md).
 * Stage 2: Copilot assisted with translating the assignment into immutable recipe data functions and documenting their browser-console tests; see [ai-log/etapa-02.md](ai-log/etapa-02.md).
 * Stage 3: Copilot assisted with creating the Vite/React application, moving the recipe data into the main component, reusing the mockup styles, and documenting verification; see [ai-log/etapa-03.md](ai-log/etapa-03.md).
 * Stage 4: Copilot assisted with building reusable recipe card and list components, rendering the menu from props, and documenting verification; see [ai-log/etapa-04.md](ai-log/etapa-04.md).
+* Stage 5: Copilot assisted with adding local recipe state, availability and deletion events, the responsive theme toggle, and documenting verification; see [ai-log/etapa-05.md](ai-log/etapa-05.md).
 
 ## How to run
 From the repository root, run:
@@ -48,14 +49,18 @@ Plain JavaScript in [mockup/recipes.js](mockup/recipes.js) stores the sample rec
 The live app is in [frontend/](frontend/), built with Vite and React. The recipe data lives in `frontend/src/App.jsx`, and the page header and availability counter are calculated from that data. The Stage 1 styles are reused in `frontend/src/App.css`.
 
 ## Stage 4: components
-The menu is rendered from recipe data through two reusable components: [RecipeList](frontend/src/components/RecipeList.jsx) receives the whole array and renders a card for each recipe; [RecipeCard](frontend/src/components/RecipeCard.jsx) receives one recipe through props and displays its name, course, category, availability, and ID. The list uses each recipe ID as its React key and shows an explicit empty-state message when there are no recipes. The card displays only fields in the current data model; illustrative cost, price, and margin figures are not stored or calculated.
+The menu is rendered from recipe data through two reusable components: [RecipeList](frontend/src/components/RecipeList.jsx) receives the whole array and renders a card for each recipe; [RecipeCard](frontend/src/components/RecipeCard.jsx) receives one recipe and the availability/deletion callbacks through props. The list uses each recipe ID as its React key and shows an explicit empty-state message when there are no recipes. The card displays only fields in the current data model; illustrative cost, price, and margin figures are not stored or calculated.
+
+## Stage 5: local state and events
+The recipe list lives in React state in `App`. Availability checkboxes and per-recipe Delete buttons update that state immutably, and the menu counters are recalculated from the current list. A button in the header switches between light and dark themes; the initial theme follows the operating-system preference. Recipe changes and the chosen theme are held only in memory and reset on refresh. Persistence and API loading are planned for later stages.
 
 ## Status
 - [x] Stage 1: static HTML/CSS mockup
 - [x] Stage 2: data logic in JavaScript
 - [x] Stage 3: Vite and React project
 - [x] Stage 4: React components and recipe cards
-- [ ] Stage 5: local state and events
+- [x] Stage 5: local state and events
+- [ ] Stage 6: loading data from a mock API
 
 ## Stage 1 Verification Table
 | ID | Requirement | Where (permalink) | How to check |
@@ -101,3 +106,15 @@ The menu is rendered from recipe data through two reusable components: [RecipeLi
 | S4-R5 | Availability changes the card appearance | [RecipeCard.jsx](frontend/src/components/RecipeCard.jsx#L8-L10) | change a sample `available` value and save |
 | S4-R6 | README Stage 4 section and AI log | [README.md](README.md), [ai-log/etapa-04.md](ai-log/etapa-04.md) | read |
 | S4-R7 | Stage 4 commit pushed to GitHub | GitHub repository | pending: publish the commit and verify it appears in the history |
+
+## Stage 5 Verification Table
+| ID | Requirement | Where (permalink) | How to check |
+| :--- | :--- | :--- | :--- |
+| S5-R1 | Recipe list is held in `useState` in `App` | [frontend/src/App.jsx](frontend/src/App.jsx) | read |
+| S5-R2 | Controlled checkbox toggles availability and card styling | [RecipeCard.jsx](frontend/src/components/RecipeCard.jsx), [App.jsx](frontend/src/App.jsx) | click a checkbox or its recipe name |
+| S5-R3 | Delete button removes the selected recipe accessibly | [RecipeCard.jsx](frontend/src/components/RecipeCard.jsx) | click Delete and confirm only that card disappears |
+| S5-R4 | Header counters derive from the current state | [frontend/src/App.jsx](frontend/src/App.jsx) | toggle or delete recipes and watch both counters |
+| S5-R5 | State changes are immutable and use functional updates | [frontend/src/App.jsx](frontend/src/App.jsx) | read; confirm updates use `map`/`filter`, not in-place mutation |
+| S5-R6 | Theme button changes light/dark mode and `data-theme` on `<html>` | [frontend/src/App.jsx](frontend/src/App.jsx), [frontend/src/App.css](frontend/src/App.css) | click in both directions with either system theme |
+| S5-R7 | No React console warnings; README and AI log are updated | [README.md](README.md), [ai-log/etapa-05.md](ai-log/etapa-05.md) | run `npm run lint`, `npm run build`, and inspect the browser console |
+| S5-R8 | Stage 5 commit pushed to GitHub | GitHub repository | pending: publish the commit and verify it appears in the history |

@@ -1,4 +1,43 @@
 :root {
+  color-scheme: light;
+  --page: #f3f6f0;
+  --surface: #ffffff;
+  --surface-raised: #f7faf4;
+  --surface-muted: #e9efe6;
+  --border: #d5dfd1;
+  --text: #263329;
+  --text-soft: #536258;
+  --text-muted: #6b796e;
+  --accent: #4b6f27;
+  --accent-strong: #35561b;
+  --accent-ink: #ffffff;
+  --warning: #99612d;
+  --danger: #a14436;
+  --danger-ink: #ffffff;
+  --radius: 16px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #101815;
+    --surface: #18211d;
+    --surface-raised: #1d2923;
+    --surface-muted: #202b26;
+    --border: #2b3931;
+    --text: #f1f3ed;
+    --text-soft: #a9b4aa;
+    --text-muted: #77867b;
+    --accent: #c2e678;
+    --accent-strong: #d3f491;
+    --accent-ink: #1a2616;
+    --warning: #e7ae78;
+    --danger: #e7ae78;
+    --danger-ink: #1a2616;
+  }
+}
+
+:root[data-theme="dark"] {
   color-scheme: dark;
   --page: #101815;
   --surface: #18211d;
@@ -12,7 +51,8 @@
   --accent-strong: #d3f491;
   --accent-ink: #1a2616;
   --warning: #e7ae78;
-  --radius: 16px;
+  --danger: #e7ae78;
+  --danger-ink: #1a2616;
 }
 
 * {
@@ -48,6 +88,12 @@ a {
   justify-content: space-between;
   padding: 0 max(6.5vw, 28px);
   border-bottom: 1px solid rgb(255 255 255 / 6%);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
 }
 
 .brand {
@@ -230,7 +276,7 @@ h2 {
   border: 1px solid var(--border);
   border-radius: 9px;
   outline: none;
-  background-color: #121a16;
+  background-color: var(--surface-muted);
   color: var(--text);
   font: inherit;
   font-size: 12px;
@@ -248,7 +294,9 @@ h2 {
 .field input:focus-visible,
 .field select:focus-visible,
 .add-button:focus-visible,
-a:focus-visible {
+a:focus-visible,
+button:focus-visible,
+.recipe-main input:focus-visible {
   outline: 3px solid var(--accent-strong);
   outline-offset: 3px;
 }
@@ -461,7 +509,7 @@ a:focus-visible {
 .card-footer {
   margin-top: auto;
   padding-top: 9px;
-  border-top: 1px solid rgb(255 255 255 / 5%);
+  border-top: 1px solid var(--border);
   color: var(--text-muted);
   font-size: 9px;
 }
@@ -476,17 +524,75 @@ a:focus-visible {
 }
 
 .recipe-card.done {
-  border-color: #303633;
-  background: linear-gradient(145deg, rgb(255 255 255 / 1.5%), transparent 50%), #171d1a;
+  border-color: var(--border);
+  background: linear-gradient(145deg, rgb(255 255 255 / 1.5%), transparent 50%), var(--surface-muted);
 }
 
-.recipe-card.done h3,
-.recipe-card.done .card-metrics strong {
-  color: #c1c8c1;
+.recipe-card.done h3 {
+  color: var(--text-muted);
 }
 
 .recipe-card.done .category-icon {
   color: var(--text-muted);
+}
+
+.recipe-main {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin: 19px 0 16px;
+  cursor: pointer;
+}
+
+.recipe-main input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  margin: 4px 0 0;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.recipe-main .recipe-copy {
+  min-width: 0;
+  margin: 0;
+}
+
+.recipe-main label {
+  cursor: pointer;
+}
+
+.delete-button {
+  flex: 0 0 auto;
+  padding: 6px 10px;
+  border: 1px solid var(--danger);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--danger);
+  cursor: pointer;
+  font: inherit;
+  font-size: 10px;
+}
+
+.delete-button:hover {
+  background: var(--danger);
+  color: var(--danger-ink);
+}
+
+.theme-toggle {
+  padding: 7px 11px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  font: inherit;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.theme-toggle:hover {
+  background: var(--surface-raised);
 }
 
 .empty-state {
@@ -505,7 +611,7 @@ a:focus-visible {
   align-items: center;
   justify-content: space-between;
   padding: 0 max(6.5vw, 28px);
-  border-top: 1px solid rgb(255 255 255 / 6%);
+  border-top: 1px solid var(--border);
   color: var(--text-muted);
   font-size: 9px;
   letter-spacing: 0.08em;
@@ -527,6 +633,10 @@ a:focus-visible {
 
   .header-note {
     display: none;
+  }
+
+  .header-actions {
+    gap: 0;
   }
 
   .page-shell {
@@ -610,7 +720,9 @@ a:focus-visible {
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .add-button {
+  .add-button,
+  .theme-toggle,
+  .delete-button {
     transition: background-color 140ms ease;
   }
 }
