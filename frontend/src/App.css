@@ -337,6 +337,9 @@ a:focus-visible {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .workspace-grid {
@@ -456,6 +459,7 @@ a:focus-visible {
 }
 
 .card-footer {
+  margin-top: auto;
   padding-top: 9px;
   border-top: 1px solid rgb(255 255 255 / 5%);
   color: var(--text-muted);
@@ -485,28 +489,14 @@ a:focus-visible {
   color: var(--text-muted);
 }
 
-.data-preview {
-  min-height: 0;
-}
-
-.data-preview h3 {
-  margin-bottom: 15px;
-}
-
-.recipe-json {
-  max-height: 60vh;
-  overflow: auto;
+.empty-state {
   margin: 0;
-  padding: 16px;
+  padding: 22px;
   border: 1px solid var(--border);
-  border-radius: 10px;
-  background: #121a16;
+  border-radius: var(--radius);
+  background: var(--surface);
   color: var(--text-soft);
-  font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
-  font-size: 12px;
-  line-height: 1.6;
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
+  text-align: center;
 }
 
 .site-footer {

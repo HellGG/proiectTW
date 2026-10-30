@@ -1,3 +1,5 @@
+import RecipeList from './components/RecipeList.jsx'
+
 const recipes = [
   {
     id: 1,
@@ -61,20 +63,17 @@ export default function App() {
                   Your menu <span className="item-count">{recipes.length} items</span>
                 </h2>
               </div>
-              <span className="stage-tag">STAGE 03 · DATA PREVIEW</span>
+              <span className="stage-tag">STAGE 04 · RECIPE CARDS</span>
             </div>
 
-            <article className="recipe-card data-preview" aria-labelledby="data-title">
-              <h3 id="data-title">Recipe data</h3>
-              <pre className="recipe-json">{JSON.stringify(recipes, null, 2)}</pre>
-            </article>
+            <RecipeList recipes={recipes} />
           </section>
         </div>
       </main>
 
       <footer className="site-footer">
         <span>HORECA COST CONTROLLER</span>
-        <span>Stage 3 · React data preview</span>
+        <span>Stage 4 · Recipe cards</span>
       </footer>
     </>
   )

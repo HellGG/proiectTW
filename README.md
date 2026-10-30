@@ -22,12 +22,13 @@ The mockup displays illustrative portion costs, menu prices, and gross margins t
 | :--- | :--- |
 | ChatGPT | Generating initial CSS layout ideas and SQL schema structure |
 | Gemini | Brainstorming project themes and formatting the README file |
-| Copilot | Implementing the Stage 1 mockup, Stage 2 data logic, and Stage 3 React/Vite setup |
+| Copilot | Implementing the Stage 1 mockup, Stage 2 data logic, and Stage 3–4 React/Vite features |
 
 Details per stage:
 * Stage 1: Gemini was used to map the HORECA project idea to the required TW structure and draft the README. Copilot assisted with the mockup implementation and this log; see [ai-log/etapa-01.md](ai-log/etapa-01.md).
 * Stage 2: Copilot assisted with translating the assignment into immutable recipe data functions and documenting their browser-console tests; see [ai-log/etapa-02.md](ai-log/etapa-02.md).
 * Stage 3: Copilot assisted with creating the Vite/React application, moving the recipe data into the main component, reusing the mockup styles, and documenting verification; see [ai-log/etapa-03.md](ai-log/etapa-03.md).
+* Stage 4: Copilot assisted with building reusable recipe card and list components, rendering the menu from props, and documenting verification; see [ai-log/etapa-04.md](ai-log/etapa-04.md).
 
 ## How to run
 From the repository root, run:
@@ -44,13 +45,17 @@ Open the local address printed by Vite (usually `http://localhost:5173`). To ver
 Plain JavaScript in [mockup/recipes.js](mockup/recipes.js) stores the sample recipes and provides immutable functions to list, count, search, add, toggle availability, and delete recipes. The functions validate new recipe data and print grouped examples and validation messages in the browser console. This stage does not read or modify the DOM, handle events, or change the visible page.
 
 ## Stage 3: Vite and React project
-The live app is in [frontend/](frontend/), built with Vite and React. The recipe data now lives in `frontend/src/App.jsx`; the page header and availability counter are calculated from that data, and the recipes are temporarily displayed as raw JSON. The Stage 1 styles are reused in `frontend/src/App.css`. Recipe cards and interactive controls will be added in later stages.
+The live app is in [frontend/](frontend/), built with Vite and React. The recipe data lives in `frontend/src/App.jsx`, and the page header and availability counter are calculated from that data. The Stage 1 styles are reused in `frontend/src/App.css`.
+
+## Stage 4: components
+The menu is rendered from recipe data through two reusable components: [RecipeList](frontend/src/components/RecipeList.jsx) receives the whole array and renders a card for each recipe; [RecipeCard](frontend/src/components/RecipeCard.jsx) receives one recipe through props and displays its name, course, category, availability, and ID. The list uses each recipe ID as its React key and shows an explicit empty-state message when there are no recipes. The card displays only fields in the current data model; illustrative cost, price, and margin figures are not stored or calculated.
 
 ## Status
 - [x] Stage 1: static HTML/CSS mockup
 - [x] Stage 2: data logic in JavaScript
 - [x] Stage 3: Vite and React project
-- [ ] Stage 4: React components and recipe cards
+- [x] Stage 4: React components and recipe cards
+- [ ] Stage 5: local state and events
 
 ## Stage 1 Verification Table
 | ID | Requirement | Where (permalink) | How to check |
@@ -79,9 +84,20 @@ The live app is in [frontend/](frontend/), built with Vite and React. The recipe
 | ID | Requirement | Where (permalink) | How to check |
 | :--- | :--- | :--- | :--- |
 | S3-R1 | Vite development server starts without errors | [frontend/package.json](frontend/package.json) | run `npm install`, then `npm run dev` in `frontend/` |
-| S3-R2 | HORECA heading and menu counters are shown, with totals calculated from data | [frontend/src/App.jsx](frontend/src/App.jsx#L25-L50) | edit recipe data and save |
+| S3-R2 | HORECA heading and menu counters are shown, with totals calculated from data | [frontend/src/App.jsx](frontend/src/App.jsx#L27-L50) | edit recipe data and save |
 | S3-R3 | App uses the recipe data from the project README | [frontend/src/App.jsx](frontend/src/App.jsx#L1-L23) | compare with the sample data above |
 | S3-R4 | Stage 1 styles are reused in React | [frontend/src/App.css](frontend/src/App.css) | open the React app and review the layout |
 | S3-R5 | dependencies are ignored by Git and production build succeeds | [frontend/.gitignore](frontend/.gitignore) | run `npm run build`; check `git status` |
 | S3-R6 | README Stage 3 section and AI log | [README.md](README.md), [ai-log/etapa-03.md](ai-log/etapa-03.md) | read |
 | S3-R7 | Stage 3 commit pushed to GitHub | GitHub repository | pending: publish the commit and verify it appears in the history |
+
+## Stage 4 Verification Table
+| ID | Requirement | Where (permalink) | How to check |
+| :--- | :--- | :--- | :--- |
+| S4-R1 | Separate list and card components | [frontend/src/components/](frontend/src/components) | open folder |
+| S4-R2 | Card receives one recipe through props | [RecipeCard.jsx](frontend/src/components/RecipeCard.jsx#L7-L35) | read |
+| S4-R3 | List uses `map` and ID-based `key` | [RecipeList.jsx](frontend/src/components/RecipeList.jsx#L3-L15) | run the app and check the browser console |
+| S4-R4 | Empty menu displays a message | [RecipeList.jsx](frontend/src/components/RecipeList.jsx#L4-L6) | temporarily set the recipes array in `App.jsx` to `[]` |
+| S4-R5 | Availability changes the card appearance | [RecipeCard.jsx](frontend/src/components/RecipeCard.jsx#L8-L10) | change a sample `available` value and save |
+| S4-R6 | README Stage 4 section and AI log | [README.md](README.md), [ai-log/etapa-04.md](ai-log/etapa-04.md) | read |
+| S4-R7 | Stage 4 commit pushed to GitHub | GitHub repository | pending: publish the commit and verify it appears in the history |
