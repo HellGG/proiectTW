@@ -34,6 +34,13 @@
       "available": true,
       "courseType": "Drink",
       "menuCategory": "Bar"
+    },
+    {
+      "name": "Burger cu Trufe",
+      "available": true,
+      "courseType": "Main",
+      "menuCategory": "Pasta",
+      "id": 7
     }
   ]
 }

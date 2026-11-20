@@ -1,4 +1,5 @@
 import RecipeCard from './RecipeCard.jsx'
+import styles from './RecipeList.module.css'
 
 export default function RecipeList({
   recipes,
@@ -14,7 +15,7 @@ export default function RecipeList({
   }
 
   return (
-    <ul className="recipe-grid" aria-label="Menu recipes">
+    <ul className={styles.list} aria-label="Menu recipes">
       {recipes.map((recipe) => (
         <RecipeCard
           key={recipe.id}

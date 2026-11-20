@@ -71,6 +71,9 @@ npm run dev   # terminal 2, http://localhost:5173
 ## Stage 7: form and validation
 Recipes can be added from the page with a controlled and validated form. Every data change (add, toggle, and delete) is sent to the mock API before the React list is updated.
 
+## Stage 8: routing and component styles
+The app uses React Router for a shared layout, a menu page, a recipe detail route at `/recipes/:id`, an about page, and a not-found page. Navigation does not reload the page. Detail data is fetched from the API using the ID from the URL. Component styles live beside their components in CSS Modules.
+
 ## Status
 - [x] Stage 1: static HTML/CSS mockup
 - [x] Stage 2: data logic in JavaScript
@@ -79,7 +82,8 @@ Recipes can be added from the page with a controlled and validated form. Every d
 - [x] Stage 5: local state and events
 - [x] Stage 6: loading data from a mock API
 - [x] Stage 7: form and validation
-- [ ] Stage 8: routing and detail page
+- [x] Stage 8: routing and detail page
+- [ ] Stage 9: Express server
 
 ## Stage 1 Verification Table
 | ID | Requirement | Where (permalink) | How to check |
@@ -160,3 +164,15 @@ Recipes can be added from the page with a controlled and validated form. Every d
 | S7-R6 | `tw.json` and required `data-testid` attributes exist | [tw.json](tw.json), [frontend/src/components/RecipeForm.jsx](frontend/src/components/RecipeForm.jsx), [frontend/src/components/RecipeCard.jsx](frontend/src/components/RecipeCard.jsx) | run `document.querySelectorAll('[data-testid="item"]').length` |
 | S7-R7 | README Stage 7 section and AI log | [README.md](README.md), [ai-log/etapa-07.md](ai-log/etapa-07.md) | read |
 | S7-R8 | Stage 7 commit pushed | GitHub repository | commit and push `Stage 7: form and validation` |
+
+## Stage 8 Verification Table
+| ID | Requirement | Where (permalink) | How to check |
+| :--- | :--- | :--- | :--- |
+| S8-R1 | Header navigation changes pages without reload | [frontend/src/components/Layout.jsx](frontend/src/components/Layout.jsx), [frontend/src/App.jsx](frontend/src/App.jsx) | use Menu and About links |
+| S8-R2 | Recipe title opens its detail page | [frontend/src/components/RecipeCard.jsx](frontend/src/components/RecipeCard.jsx), [frontend/src/pages/RecipeDetailPage.jsx](frontend/src/pages/RecipeDetailPage.jsx) | click a title and verify `/recipes/<id>` |
+| S8-R3 | Direct detail URL loads data and unknown IDs show an error | [frontend/src/pages/RecipeDetailPage.jsx](frontend/src/pages/RecipeDetailPage.jsx), [frontend/src/api.js](frontend/src/api.js) | open `/recipes/1` and `/recipes/999` |
+| S8-R4 | Unknown URLs show the app 404 page | [frontend/src/App.jsx](frontend/src/App.jsx), [frontend/src/pages/NotFoundPage.jsx](frontend/src/pages/NotFoundPage.jsx) | open `/ceva` |
+| S8-R5 | Components use CSS Modules and global styles are shared | [frontend/src/components/](frontend/src/components), [frontend/src/pages/](frontend/src/pages), [frontend/src/index.css](frontend/src/index.css) | read |
+| S8-R6 | Stage 7 and Stage 8 test attributes remain present | [tw.json](tw.json), [frontend/src/components/RecipeCard.jsx](frontend/src/components/RecipeCard.jsx), [frontend/src/pages/RecipeDetailPage.jsx](frontend/src/pages/RecipeDetailPage.jsx) | query `[data-testid]` in the browser |
+| S8-R7 | README Stage 8 section and AI log | [README.md](README.md), [ai-log/etapa-08.md](ai-log/etapa-08.md) | read |
+| S8-R8 | Stage 8 commit pushed | GitHub repository | commit and push `Stage 8: routing and component styles` |

@@ -17,6 +17,10 @@ export function fetchRecipes() {
   return request('/recipes')
 }
 
+export function fetchRecipe(id) {
+  return request(`/recipes/${id}`)
+}
+
 export function createRecipe(recipe) {
   return request('/recipes', {
     method: 'POST',

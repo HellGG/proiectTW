@@ -1,8 +1,6 @@
-const COURSE_LABELS = {
-  Main: 'MAIN COURSE',
-  Dessert: 'DESSERT',
-  Drink: 'DRINK',
-}
+import { Link } from 'react-router-dom'
+import { COURSE_LABELS } from '../constants.js'
+import styles from './RecipeCard.module.css'
 
 export default function RecipeCard({
   recipe,
@@ -11,28 +9,27 @@ export default function RecipeCard({
 }) {
   const availabilityClass = recipe.available ? '' : ' unavailable'
   const statusDotClass = recipe.available ? '' : ' status-dot-muted'
-  const cardClass = recipe.available ? 'recipe-card' : 'recipe-card done'
 
   return (
     <li
-      className={cardClass}
+      className={`${styles.card}${recipe.available ? '' : ` ${styles.done}`}`}
       data-testid="item"
       data-id={recipe.id}
     >
-      <div className="card-topline">
+      <div className={styles.topline}>
         <span className="category-label">
           <span className="category-icon" aria-hidden="true">
             {recipe.menuCategory.charAt(0).toUpperCase()}
           </span>
           {recipe.menuCategory.toUpperCase()}
         </span>
-        <span className={`availability${availabilityClass}`}>
+        <span className={`${styles.availability}${availabilityClass}`}>
           <span className={`status-dot${statusDotClass}`} aria-hidden="true"></span>
           {recipe.available ? 'Available' : 'Not available'}
         </span>
       </div>
 
-      <div className="recipe-main">
+      <div className={styles.main}>
         <input
           id={`recipe-availability-${recipe.id}`}
           type="checkbox"
@@ -41,17 +38,21 @@ export default function RecipeCard({
           aria-label={`Toggle availability for ${recipe.name}`}
           data-testid="item-toggle"
         />
-        <div className="recipe-copy">
+        <div className={styles.copy}>
           <p className="course-label">{COURSE_LABELS[recipe.courseType]}</p>
-          <h3 data-testid="item-title">
-            <label htmlFor={`recipe-availability-${recipe.id}`}>
+          <h3>
+            <Link
+              to={`/recipes/${recipe.id}`}
+              className={styles.title}
+              data-testid="item-link"
+            >
               {recipe.name}
-            </label>
+            </Link>
           </h3>
         </div>
       </div>
 
-      <div className="card-footer">
+      <div className={styles.footer}>
         <span>Recipe <strong>#{String(recipe.id).padStart(3, '0')}</strong></span>
         <span className="margin-note">{recipe.menuCategory} · {recipe.courseType}</span>
         <button

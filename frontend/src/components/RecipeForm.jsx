@@ -1,18 +1,6 @@
 import { useState } from 'react'
-
-const COURSE_TYPES = [
-  { value: 'Main', label: 'Main course' },
-  { value: 'Dessert', label: 'Dessert' },
-  { value: 'Drink', label: 'Drink' },
-]
-
-const MENU_CATEGORIES = [
-  { value: 'Pasta', label: 'Pasta' },
-  { value: 'Grill', label: 'Grill' },
-  { value: 'Bar', label: 'Bar' },
-  { value: 'Dessert', label: 'Dessert' },
-  { value: 'Starters', label: 'Starters' },
-]
+import { COURSE_TYPES, MENU_CATEGORIES } from '../constants.js'
+import styles from './RecipeForm.module.css'
 
 const NAME_MAX = 100
 
@@ -60,7 +48,7 @@ export default function RecipeForm({ onAdd }) {
 
   return (
     <form
-      className="recipe-form"
+      className={styles.form}
       onSubmit={handleSubmit}
       noValidate
       data-testid="form"
