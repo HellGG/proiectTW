@@ -1,0 +1,9 @@
+{
+  "resource": "recipes",
+  "title": "name",
+  "done": "available",
+  "sample": {
+    "courseType": "Dessert",
+    "menuCategory": "Dessert"
+  }
+}

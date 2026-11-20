@@ -22,16 +22,9 @@
       "menuCategory": "Bar"
     },
     {
-      "id": 4,
-      "name": "Lemon Cheesecake",
-      "available": true,
-      "courseType": "Dessert",
-      "menuCategory": "Dessert"
-    },
-    {
       "id": 5,
       "name": "Roasted Pumpkin Soup",
-      "available": false,
+      "available": true,
       "courseType": "Main",
       "menuCategory": "Starters"
     },

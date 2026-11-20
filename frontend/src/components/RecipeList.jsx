@@ -6,7 +6,11 @@ export default function RecipeList({
   onDelete,
 }) {
   if (recipes.length === 0) {
-    return <p className="empty-state">There are no recipes in the menu yet.</p>
+    return (
+      <p className="empty-state" data-testid="empty">
+        There are no recipes in the menu yet.
+      </p>
+    )
   }
 
   return (

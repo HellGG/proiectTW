@@ -68,6 +68,9 @@ npm run api   # terminal 1, http://localhost:3001
 npm run dev   # terminal 2, http://localhost:5173
 ```
 
+## Stage 7: form and validation
+Recipes can be added from the page with a controlled and validated form. Every data change (add, toggle, and delete) is sent to the mock API before the React list is updated.
+
 ## Status
 - [x] Stage 1: static HTML/CSS mockup
 - [x] Stage 2: data logic in JavaScript
@@ -75,7 +78,8 @@ npm run dev   # terminal 2, http://localhost:5173
 - [x] Stage 4: React components and recipe cards
 - [x] Stage 5: local state and events
 - [x] Stage 6: loading data from a mock API
-- [ ] Stage 7: form and validation
+- [x] Stage 7: form and validation
+- [ ] Stage 8: routing and detail page
 
 ## Stage 1 Verification Table
 | ID | Requirement | Where (permalink) | How to check |
@@ -144,3 +148,15 @@ npm run dev   # terminal 2, http://localhost:5173
 | S6-R5 | Fetch and API URL are centralized in `api.js` | [frontend/src/api.js](frontend/src/api.js), [frontend/.env.example](frontend/.env.example) | search for `fetch`; only `api.js` should call it |
 | S6-R6 | README and AI log describe Stage 6 | [README.md](README.md), [ai-log/etapa-06.md](ai-log/etapa-06.md) | read |
 | S6-R7 | Stage 6 commit is published | GitHub repository | commit and push `Stage 6: data from a mock API` |
+
+## Stage 7 Verification Table
+| ID | Requirement | Where (permalink) | How to check |
+| :--- | :--- | :--- | :--- |
+| S7-R1 | Controlled form with `value` and `onChange` on every field | [frontend/src/components/RecipeForm.jsx](frontend/src/components/RecipeForm.jsx) | read |
+| S7-R2 | Empty name shows an error and sends no request | [frontend/src/components/RecipeForm.jsx](frontend/src/components/RecipeForm.jsx) | submit an empty form and inspect Network |
+| S7-R3 | Added item appears and survives refresh | [frontend/src/App.jsx](frontend/src/App.jsx), [frontend/src/api.js](frontend/src/api.js) | add a recipe, refresh |
+| S7-R4 | Toggle and delete survive refresh | [frontend/src/App.jsx](frontend/src/App.jsx) | toggle/delete, refresh |
+| S7-R5 | Submit button disables during save and fields clear only on success | [frontend/src/components/RecipeForm.jsx](frontend/src/components/RecipeForm.jsx) | use API delay and stop/restart the API |
+| S7-R6 | `tw.json` and required `data-testid` attributes exist | [tw.json](tw.json), [frontend/src/components/RecipeForm.jsx](frontend/src/components/RecipeForm.jsx), [frontend/src/components/RecipeCard.jsx](frontend/src/components/RecipeCard.jsx) | run `document.querySelectorAll('[data-testid="item"]').length` |
+| S7-R7 | README Stage 7 section and AI log | [README.md](README.md), [ai-log/etapa-07.md](ai-log/etapa-07.md) | read |
+| S7-R8 | Stage 7 commit pushed | GitHub repository | commit and push `Stage 7: form and validation` |

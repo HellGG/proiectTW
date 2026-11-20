@@ -14,7 +14,11 @@ export default function RecipeCard({
   const cardClass = recipe.available ? 'recipe-card' : 'recipe-card done'
 
   return (
-    <li className={cardClass}>
+    <li
+      className={cardClass}
+      data-testid="item"
+      data-id={recipe.id}
+    >
       <div className="card-topline">
         <span className="category-label">
           <span className="category-icon" aria-hidden="true">
@@ -35,10 +39,11 @@ export default function RecipeCard({
           checked={recipe.available}
           onChange={() => onToggleAvailability(recipe.id)}
           aria-label={`Toggle availability for ${recipe.name}`}
+          data-testid="item-toggle"
         />
         <div className="recipe-copy">
           <p className="course-label">{COURSE_LABELS[recipe.courseType]}</p>
-          <h3>
+          <h3 data-testid="item-title">
             <label htmlFor={`recipe-availability-${recipe.id}`}>
               {recipe.name}
             </label>
@@ -54,6 +59,7 @@ export default function RecipeCard({
           type="button"
           onClick={() => onDelete(recipe.id)}
           aria-label={`Delete ${recipe.name}`}
+          data-testid="item-delete"
         >
           Delete
         </button>

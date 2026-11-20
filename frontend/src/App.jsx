@@ -1,6 +1,12 @@
 import { useEffect, useState } from 'react'
 import RecipeList from './components/RecipeList.jsx'
-import { fetchRecipes } from './api.js'
+import RecipeForm from './components/RecipeForm.jsx'
+import {
+  createRecipe,
+  deleteRecipe,
+  fetchRecipes,
+  updateRecipe,
+} from './api.js'
 
 function getSystemTheme() {
   return window.matchMedia('(prefers-color-scheme: dark)').matches
@@ -39,20 +45,34 @@ export default function App() {
     document.documentElement.dataset.theme = theme
   }, [theme])
 
-  function handleToggleAvailability(id) {
-    setRecipes((previousRecipes) =>
-      previousRecipes.map((recipe) =>
-        recipe.id === id
-          ? { ...recipe, available: !recipe.available }
-          : recipe
-      )
-    )
+  async function handleAdd(recipe) {
+    const created = await createRecipe(recipe)
+    setRecipes((previousRecipes) => [...previousRecipes, created])
   }
 
-  function handleDeleteRecipe(id) {
-    setRecipes((previousRecipes) =>
-      previousRecipes.filter((recipe) => recipe.id !== id)
-    )
+  async function handleToggleAvailability(id) {
+    const recipe = recipes.find((item) => item.id === id)
+    try {
+      const updated = await updateRecipe(id, {
+        available: !recipe.available,
+      })
+      setRecipes((previousRecipes) =>
+        previousRecipes.map((item) => (item.id === id ? updated : item))
+      )
+    } catch (err) {
+      setError(err.message)
+    }
+  }
+
+  async function handleDeleteRecipe(id) {
+    try {
+      await deleteRecipe(id)
+      setRecipes((previousRecipes) =>
+        previousRecipes.filter((recipe) => recipe.id !== id)
+      )
+    } catch (err) {
+      setError(err.message)
+    }
   }
 
   function handleThemeToggle() {
@@ -100,6 +120,16 @@ export default function App() {
         </section>
 
         <div className="workspace-grid">
+          <section className="add-section" aria-labelledby="add-recipe-title">
+            <div className="section-heading">
+              <div>
+                <p className="eyebrow">NEW ITEM</p>
+                <h2 id="add-recipe-title">Add a recipe</h2>
+              </div>
+            </div>
+            <RecipeForm onAdd={handleAdd} />
+          </section>
+
           <section className="menu-section" aria-labelledby="menu-title">
             <div className="section-heading menu-heading">
               <div>
@@ -108,16 +138,20 @@ export default function App() {
                   Your menu <span className="item-count">{recipes.length} items</span>
                 </h2>
               </div>
-              <span className="stage-tag">STAGE 06 · MOCK API</span>
+              <span className="stage-tag">STAGE 07 · CRUD FORM</span>
             </div>
 
-            {loading && <p className="info">Se încarcă meniul...</p>}
-            {error && (
-              <p className="error">
-                Nu am putut încărca datele: {error}. Rulează <code>npm run api</code>?
+            {loading && (
+              <p className="info" data-testid="loading">
+                Se încarcă meniul...
               </p>
             )}
-            {!loading && !error && (
+            {error && (
+              <p className="error" data-testid="error">
+                {error}
+              </p>
+            )}
+            {!loading && (
               <RecipeList
                 recipes={recipes}
                 onToggleAvailability={handleToggleAvailability}
@@ -130,7 +164,7 @@ export default function App() {
 
       <footer className="site-footer">
         <span>HORECA COST CONTROLLER</span>
-        <span>Stage 6 · Mock API</span>
+        <span>Stage 7 · CRUD form</span>
       </footer>
     </>
   )
