@@ -1,0 +1,46 @@
+{
+  "recipes": [
+    {
+      "id": 1,
+      "name": "Carbonara Pasta",
+      "available": true,
+      "courseType": "Main",
+      "menuCategory": "Pasta"
+    },
+    {
+      "id": 2,
+      "name": "Lamb Ribs with Citrus Glaze",
+      "available": false,
+      "courseType": "Main",
+      "menuCategory": "Grill"
+    },
+    {
+      "id": 3,
+      "name": "Craft IPA Beer",
+      "available": true,
+      "courseType": "Drink",
+      "menuCategory": "Bar"
+    },
+    {
+      "id": 4,
+      "name": "Lemon Cheesecake",
+      "available": true,
+      "courseType": "Dessert",
+      "menuCategory": "Dessert"
+    },
+    {
+      "id": 5,
+      "name": "Roasted Pumpkin Soup",
+      "available": false,
+      "courseType": "Main",
+      "menuCategory": "Starters"
+    },
+    {
+      "id": 6,
+      "name": "House Mineral Water",
+      "available": true,
+      "courseType": "Drink",
+      "menuCategory": "Bar"
+    }
+  ]
+}

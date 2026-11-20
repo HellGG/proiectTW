@@ -1,29 +1,6 @@
 import { useEffect, useState } from 'react'
 import RecipeList from './components/RecipeList.jsx'
-
-const INITIAL_RECIPES = [
-  {
-    id: 1,
-    name: 'Carbonara Pasta',
-    available: true,
-    courseType: 'Main',
-    menuCategory: 'Pasta',
-  },
-  {
-    id: 2,
-    name: 'Lamb Ribs with Citrus Glaze',
-    available: false,
-    courseType: 'Main',
-    menuCategory: 'Grill',
-  },
-  {
-    id: 3,
-    name: 'Craft IPA Beer',
-    available: true,
-    courseType: 'Drink',
-    menuCategory: 'Bar',
-  },
-]
+import { fetchRecipes } from './api.js'
 
 function getSystemTheme() {
   return window.matchMedia('(prefers-color-scheme: dark)').matches
@@ -32,9 +9,31 @@ function getSystemTheme() {
 }
 
 export default function App() {
-  const [recipes, setRecipes] = useState(INITIAL_RECIPES)
+  const [recipes, setRecipes] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
   const [theme, setTheme] = useState(getSystemTheme)
   const availableCount = recipes.filter((recipe) => recipe.available).length
+
+  useEffect(() => {
+    let ignore = false
+
+    async function load() {
+      try {
+        const data = await fetchRecipes()
+        if (!ignore) setRecipes(data)
+      } catch (err) {
+        if (!ignore) setError(err.message)
+      } finally {
+        if (!ignore) setLoading(false)
+      }
+    }
+
+    load()
+    return () => {
+      ignore = true
+    }
+  }, [])
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme
@@ -109,21 +108,29 @@ export default function App() {
                   Your menu <span className="item-count">{recipes.length} items</span>
                 </h2>
               </div>
-              <span className="stage-tag">STAGE 05 · INTERACTIVE MENU</span>
+              <span className="stage-tag">STAGE 06 · MOCK API</span>
             </div>
 
-            <RecipeList
-              recipes={recipes}
-              onToggleAvailability={handleToggleAvailability}
-              onDelete={handleDeleteRecipe}
-            />
+            {loading && <p className="info">Se încarcă meniul...</p>}
+            {error && (
+              <p className="error">
+                Nu am putut încărca datele: {error}. Rulează <code>npm run api</code>?
+              </p>
+            )}
+            {!loading && !error && (
+              <RecipeList
+                recipes={recipes}
+                onToggleAvailability={handleToggleAvailability}
+                onDelete={handleDeleteRecipe}
+              />
+            )}
           </section>
         </div>
       </main>
 
       <footer className="site-footer">
         <span>HORECA COST CONTROLLER</span>
-        <span>Stage 5 · Interactive menu</span>
+        <span>Stage 6 · Mock API</span>
       </footer>
     </>
   )

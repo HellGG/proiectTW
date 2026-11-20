@@ -32,15 +32,21 @@ Details per stage:
 * Stage 5: Copilot assisted with adding local recipe state, availability and deletion events, the responsive theme toggle, and documenting verification; see [ai-log/etapa-05.md](ai-log/etapa-05.md).
 
 ## How to run
-From the repository root, run:
+From the repository root, run the mock API and Vite app in two terminals:
 
 ```sh
 cd frontend
 npm install
+npm run api
+```
+
+```sh
+cd frontend
 npm run dev
 ```
 
 Open the local address printed by Vite (usually `http://localhost:5173`). To verify the production build, run `npm run build` from `frontend/`. Node.js 20.19+ or 22.12+ is required.
+The API is available at `http://localhost:3001/recipes`; copy `.env.example` to `.env` to override `VITE_API_URL` if needed.
 
 ## Stage 2: data logic
 Plain JavaScript in [mockup/recipes.js](mockup/recipes.js) stores the sample recipes and provides immutable functions to list, count, search, add, toggle availability, and delete recipes. The functions validate new recipe data and print grouped examples and validation messages in the browser console. This stage does not read or modify the DOM, handle events, or change the visible page.
@@ -54,13 +60,22 @@ The menu is rendered from recipe data through two reusable components: [RecipeLi
 ## Stage 5: local state and events
 The recipe list lives in React state in `App`. Availability checkboxes and per-recipe Delete buttons update that state immutably, and the menu counters are recalculated from the current list. A button in the header switches between light and dark themes; the initial theme follows the operating-system preference. Recipe changes and the chosen theme are held only in memory and reset on refresh. Persistence and API loading are planned for later stages.
 
+## Stage 6: data from a mock API
+The menu is served by `json-server` from `frontend/db.json`. The app fetches `/recipes` with `fetch` on load and displays loading, success, and error states. All HTTP code is centralized in `frontend/src/api.js`, and `VITE_API_URL` may be configured through `.env.example`.
+
+```sh
+npm run api   # terminal 1, http://localhost:3001
+npm run dev   # terminal 2, http://localhost:5173
+```
+
 ## Status
 - [x] Stage 1: static HTML/CSS mockup
 - [x] Stage 2: data logic in JavaScript
 - [x] Stage 3: Vite and React project
 - [x] Stage 4: React components and recipe cards
 - [x] Stage 5: local state and events
-- [ ] Stage 6: loading data from a mock API
+- [x] Stage 6: loading data from a mock API
+- [ ] Stage 7: form and validation
 
 ## Stage 1 Verification Table
 | ID | Requirement | Where (permalink) | How to check |
@@ -118,3 +133,14 @@ The recipe list lives in React state in `App`. Availability checkboxes and per-r
 | S5-R6 | Theme button changes light/dark mode and `data-theme` on `<html>` | [frontend/src/App.jsx](frontend/src/App.jsx), [frontend/src/App.css](frontend/src/App.css) | click in both directions with either system theme |
 | S5-R7 | No React console warnings; README and AI log are updated | [README.md](README.md), [ai-log/etapa-05.md](ai-log/etapa-05.md) | run `npm run lint`, `npm run build`, and inspect the browser console |
 | S5-R8 | Stage 5 commit pushed to GitHub | GitHub repository | pending: publish the commit and verify it appears in the history |
+
+## Stage 6 Verification Table
+| ID | Requirement | Where (permalink) | How to check |
+| :--- | :--- | :--- | :--- |
+| S6-R1 | `npm run api` starts and the recipe route shows JSON | [frontend/package.json](frontend/package.json), [frontend/db.json](frontend/db.json) | open `http://localhost:3001/recipes` |
+| S6-R2 | Recipe data no longer starts in React code | [frontend/src/App.jsx](frontend/src/App.jsx) | read; `useState([])` initializes the list |
+| S6-R3 | Loading message appears while waiting | [frontend/src/App.jsx](frontend/src/App.jsx) | run `npx json-server --watch db.json --port 3001 --delay 4000` |
+| S6-R4 | Error message appears when the API is down | [frontend/src/App.jsx](frontend/src/App.jsx) | stop `npm run api`, refresh the app |
+| S6-R5 | Fetch and API URL are centralized in `api.js` | [frontend/src/api.js](frontend/src/api.js), [frontend/.env.example](frontend/.env.example) | search for `fetch`; only `api.js` should call it |
+| S6-R6 | README and AI log describe Stage 6 | [README.md](README.md), [ai-log/etapa-06.md](ai-log/etapa-06.md) | read |
+| S6-R7 | Stage 6 commit is published | GitHub repository | commit and push `Stage 6: data from a mock API` |
